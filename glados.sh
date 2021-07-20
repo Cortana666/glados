@@ -54,11 +54,11 @@ main(){
         then
             is_reset_time=1
             is_sign=0
-            sign "COOKIE"
+            sign "$1"
         fi
 
         sleep 0.3
     done
 }
 
-main
+main "COOKIE"
