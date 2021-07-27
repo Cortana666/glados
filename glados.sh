@@ -41,7 +41,7 @@ sign(){
     case "$message" in
         "Please Try Tomorrow") message="签到失败，请明天再试"
         ;;
-        "Checkin! Get 1 day") message="签到成功，有效期延长1天"
+        "Checkin! Get 1 Day") message="签到成功，有效期延长1天"
         ;;
         "Checkin! Get 0 day") message="签到成功，有效期没有延长"
         ;;

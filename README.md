@@ -1,6 +1,11 @@
 # glados
 glados自动签到脚本
 ---
+签到结果：
+- 签到失败，请明天再试（message:Please Try Tomorrow）
+- 签到成功，有效期延长1天（message:Checkin! Get 0 day(Your lucky chance is 33%), try next time.）
+- 签到成功，有效期没有延长（message:Checkin! Get 1 Day）
+---
 特性：
 - 每天不定时签到，防止系统检测
 - 会在同目录下生成请求响应日志文件
