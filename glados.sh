@@ -23,12 +23,25 @@ getSignTime(){
     fi
 
     sign_time="$sign_hour:$sign_minute:$sign_second"
-    echo "下次签到时间为明天$sign_time"
+    echo "下次签到时间为$(date "+%Y-%m-%d ")$sign_time"
 }
 
 sign(){
-    curl -b "$1" -d "token=glados_network" https://glados.rocks/api/user/checkin >> api.log 2>&1
-    echo "$(date "+%H:%M:%S")签到成功"
+    response=$(curl -b "$1" -d "token=glados_network" https://glados.rocks/api/user/checkin)
+    $response >> api.log 2>&1
+
+    message=$(echo $response | grep -Eo "message\":\"([a-zA-Z0-9 !]*)")
+    message=${message: 10}
+
+    case "$message" in
+        "Please Try Tomorrow") message="签到失败，请明天再试"
+        ;;
+        "Checkin! Get 1 day") message="签到成功，有效期延长1天"
+        ;;
+        "Checkin! Get 0 day") message="签到成功，有效期没有延长"
+        ;;
+    esac
+    echo "$(date "+%Y-%m-%d %H:%M:%S")$message"
 }
 
 main(){
@@ -61,4 +74,8 @@ main(){
     done
 }
 
+# 主程序循环每天随机时间签到（只需执行一次）
 main "COOKIE"
+
+# 手动执行脚本签到（每天需执行一次）
+# sign "COOKIE"
