@@ -27,7 +27,7 @@ getSignTime(){
 
     # 组成签到时间并输出
     sign_time="$sign_hour:$sign_minute:$sign_second"
-    echo "下次签到时间为$(date "+%Y-%m-%d ")$sign_time"
+    echo "明天签到时间为$sign_time"
 }
 
 sign(){
@@ -54,31 +54,34 @@ sign(){
 }
 
 main(){
-    is_reset_time=1
-    is_sign=0
+    # 今日即时签到
+    sign "$1"
+
+    is_need_time=1
+    is_need_sign=0
 
     while true
     do
         # 判断是否需要设置明天签到时间
-        if [ $is_reset_time == 1 ]
+        if [ $is_need_time == 1 ]
         then
             getSignTime
-            is_reset_time=0
+            is_need_time=0
         fi
 
         # 判断跳日
         if [ $(date "+%H") == "00" ]
         then
-            is_sign=1
+            is_need_sign=1
         fi
 
         now_time=$(date "+%H:%M:%S")
 
         # 到达时间且今日脚本未签到则签到
-        if [ $sign_time == $now_time -a $is_sign == 1 ]
+        if [ $sign_time == $now_time -a $is_need_sign == 1 ]
         then
-            is_reset_time=1
-            is_sign=0
+            is_need_time=1
+            is_need_sign=0
             sign "$1"
         fi
 
