@@ -32,7 +32,7 @@ getSignTime(){
 
 sign(){
     # 请求签到接口并记录请求日志
-    response=$(curl -b "$1" -d "token=glados_network" https://glados.rocks/api/user/checkin)
+    response=$(curl -b "$1" -d "token=glados.network" https://glados.rocks/api/user/checkin)
     echo $response >> api.log 2>&1
 
     # 匹配签到结果
